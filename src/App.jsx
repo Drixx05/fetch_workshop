@@ -4,7 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button"
+import Button from "react-bootstrap/Button";
 import "./App.css";
 
 function App() {
@@ -41,7 +41,9 @@ function App() {
 
 	return (
 		<Container>
-			<Button onClick={addProduct}>Ajouter un produit</Button>
+			<Button onClick={addProduct} className="mb-3">
+				Ajouter un produit
+			</Button>
 			<Row>
 				{products.map((product) => (
 					<Col key={product.id} md={3} className="gy-3">
