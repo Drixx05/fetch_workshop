@@ -57,26 +57,27 @@ function App() {
 		alert("Le produit avec l'id " + data.id + " a été modifié");
 	};
 
-  const updateProductPrice = async (id) => {
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+	const updateProductPrice = async (id) => {
+		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
 			method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        price: 77.88,
-      }),
-  });
-  const data = await response.json();
-  alert("Le produit avec l'id "+ data.id + " a été modifié");
-  }
-  const deleteProduct = async (id) => {
-    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				price: 77.88,
+			}),
+		});
+		const data = await response.json();
+		alert("Le produit avec l'id " + data.id + " a été modifié");
+	};
+
+	const deleteProduct = async (id) => {
+		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
 			method: "DELETE",
-  });
-  const data = await response.json();
-  alert("Le produit avec l'id "+ data.id + " a été supprimé")
-  };
+		});
+		const data = await response.json();
+		alert("Le produit avec l'id " + data.id + " a été supprimé");
+	};
 
 	return (
 		<Container>
@@ -92,11 +93,13 @@ function App() {
 								<Card.Title>{product.title}</Card.Title>
 								<Card.Text>{product.description}</Card.Text>
 								<Card.Text>{product.price} €</Card.Text>
-								<Button onClick={updateProduct}>Modifier un produit</Button>
-								<Button onClick={updateProductPrice}>
+                <Card.Footer className="row gy-3 mx-0">
+								<Button variant="primary" onClick={updateProduct}>Modifier un produit</Button>
+								<Button  variant="warning" onClick={updateProductPrice}>
 									Modifier le prix du produit
 								</Button>
-                <Button onClick={deleteProduct}>Supprimer le produit</Button>
+								<Button variant="danger" onClick={deleteProduct}>Supprimer le produit</Button>
+                </Card.Footer>
 							</Card.Body>
 						</Card>
 					</Col>
