@@ -25,7 +25,7 @@ function App() {
 			body: JSON.stringify({
 				title: "Nouveau Produit",
 				price: 77,
-				description: "On ne peut faire mieux",
+				description: "Never gonna give you up",
 				image:
 					"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
 				category: "bijoux",
@@ -37,6 +37,46 @@ function App() {
 		const data = await newProduct.json();
 		alert("Le produit avec l'id " + data.id + " a été créé");
 	};
+
+	const updateProduct = async (id) => {
+		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+			method: "PUT",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				title: "Nouveau Produit",
+				price: 77,
+				description: "Never gonna give you up",
+				image:
+					"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
+				category: "bijoux",
+			}),
+		});
+		const data = await response.json();
+		alert("Le produit avec l'id " + data.id + " a été modifié");
+	};
+
+  const updateProductPrice = async (id) => {
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+			method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        price: 77.88,
+      }),
+  });
+  const data = await response.json();
+  alert("Le produit avec l'id "+ data.id + " a été modifié");
+  }
+  const deleteProduct = async (id) => {
+    const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+			method: "DELETE",
+  });
+  const data = await response.json();
+  alert("Le produit avec l'id "+ data.id + " a été supprimé")
+  };
 
 	return (
 		<Container>
@@ -52,6 +92,11 @@ function App() {
 								<Card.Title>{product.title}</Card.Title>
 								<Card.Text>{product.description}</Card.Text>
 								<Card.Text>{product.price} €</Card.Text>
+								<Button onClick={updateProduct}>Modifier un produit</Button>
+								<Button onClick={updateProductPrice}>
+									Modifier le prix du produit
+								</Button>
+                <Button onClick={deleteProduct}>Supprimer le produit</Button>
 							</Card.Body>
 						</Card>
 					</Col>
