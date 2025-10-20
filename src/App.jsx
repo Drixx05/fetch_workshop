@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 
 function App() {
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
         async function fetchProducts() {
@@ -18,11 +18,11 @@ function App() {
     }, []);
     
     return (
-        <Container className="justify-content-md-center">
-          <Row >
+        <Container>
+          <Row>
                 {products.map((product) => (
-                    <Col>
-                    <Card key={product.id}>
+                    <Col key={product.id} >
+                    <Card >
                         <Card.Img variant="top" src={product.image} />
                         <Card.Body>
                             <Card.Title>{product.title}</Card.Title>
