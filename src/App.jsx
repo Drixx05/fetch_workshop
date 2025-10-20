@@ -17,18 +17,20 @@ function App() {
     
     return (
         <Container>
-            <div className="card-container">
-                {products && products.map((product) => (
+          <Row className="justify-content-md-center">
+                {products.map((product) => (
+                    <Col>
                     <Card key={product.id}>
-                        <Card.Img variant="top" src={product.image} className="card-img-top" />
+                        <Card.Img variant="top" src={product.image} />
                         <Card.Body>
                             <Card.Title>{product.title}</Card.Title>
                             <Card.Text>{product.description}</Card.Text>
                             <Card.Text>${product.price}</Card.Text>
                         </Card.Body>
                     </Card>
+                    </Col>
                 ))}
-            </div>
+                </Row>
         </Container>
     );
 }
