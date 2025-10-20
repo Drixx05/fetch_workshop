@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button"
 import "./App.css";
 
 function App() {
@@ -18,8 +19,29 @@ function App() {
 		fetchProducts();
 	}, []);
 
+	const addProduct = async () => {
+		const newProduct = await fetch("https://fakestoreapi.com/products", {
+			method: "POST",
+			body: JSON.stringify({
+				id: "0",
+				title: "Nouveau Produit",
+				price: 77,
+				description: "On ne peut faire mieux",
+				image:
+					"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
+				category: "bijoux",
+			}),
+			headers: {
+				"Content-type": "application/json",
+			},
+		});
+		const data = await newProduct.json();
+		alert("Le produit avec l'id " + data.id + " a été créé");
+	};
+
 	return (
 		<Container>
+			<Button onClick={addProduct}>Ajouter un produit</Button>
 			<Row>
 				{products.map((product) => (
 					<Col key={product.id} md={3} className="gy-3">
