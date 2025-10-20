@@ -23,7 +23,6 @@ function App() {
 		const newProduct = await fetch("https://fakestoreapi.com/products", {
 			method: "POST",
 			body: JSON.stringify({
-				id: "0",
 				title: "Nouveau Produit",
 				price: 77,
 				description: "On ne peut faire mieux",
