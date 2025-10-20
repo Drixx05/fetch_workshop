@@ -21,7 +21,7 @@ function App() {
         <Container>
           <Row>
                 {products.map((product) => (
-                    <Col key={product.id} >
+                    <Col key={product.id} md={3}  className="d-grid gap-2 col-6 mb-3">
                     <Card >
                         <Card.Img variant="top" src={product.image} />
                         <Card.Body>
