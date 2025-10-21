@@ -27,7 +27,7 @@ function App() {
 			} catch (error) {
 				setError("Une erreur est survenue lors de la récupération des produits.")
 				console.error(error.message);
-				
+
 			} finally {
 				setLoading(false);
 			}
@@ -35,7 +35,7 @@ function App() {
 			fetchProducts();
 		}, []);
 
-	const addProduct = async () => {
+	const createProduct = async () => {
 		try {
 			const response = await fetch("https://fakestoreapi.com/products", {
 				method: "POST",
@@ -58,6 +58,7 @@ function App() {
 			}
 			
 			const data = await response.json();
+			setProducts([...products, data]);
 			alert("Le produit avec l'id " + data.id + " a été créé");
 
 		} catch (err) {
@@ -89,6 +90,7 @@ function App() {
 			}
 
 			const data = await response.json();
+			setProducts(products.map(product => product.id === id ? { ...product, ...data } : product));
 			alert("Le produit avec l'id " + data.id + " a été modifié");
 
 		} catch (err) {
@@ -115,6 +117,7 @@ function App() {
 			}
 
 			const data = await response.json();
+			setProducts(products.map(product => product.id === id ? { ...product, ...data } : product));
 			alert("Le produit avec l'id " + data.id + " a été modifié");
 
 		} catch (err) {
@@ -135,6 +138,7 @@ const deleteProduct = async (id) => {
 			}
 
 			const data = await response.json();
+			setProducts(products.filter(product => product.id !== id));
 			alert("Le produit avec l'id " + data.id + " a été supprimé");
 	
 		} catch (err) {
@@ -145,7 +149,7 @@ const deleteProduct = async (id) => {
 
 	return (
 		<Container>
-			<Button onClick={addProduct} className="mb-3">
+			<Button onClick={createProduct} className="mb-3">
 				Ajouter un produit
 			</Button>
 			<Row>
