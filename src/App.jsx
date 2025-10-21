@@ -58,7 +58,7 @@ function App() {
 			}
 			
 			const data = await response.json();
-			setProducts([...products, data]);
+			setProducts(previousProducts => [...previousProducts, data]);
 			alert("Le produit avec l'id " + data.id + " a été créé");
 
 		} catch (err) {
@@ -90,7 +90,7 @@ function App() {
 			}
 
 			const data = await response.json();
-			setProducts(products.map(product => product.id === id ? { ...product, ...data } : product));
+			setProducts(previousProducts => previousProducts.map(product => product.id === id ? { ...product, ...data } : product));
 			alert("Le produit avec l'id " + data.id + " a été modifié");
 
 		} catch (err) {
@@ -117,7 +117,7 @@ function App() {
 			}
 
 			const data = await response.json();
-			setProducts(products.map(product => product.id === id ? { ...product, ...data } : product));
+			setProducts(previousProducts => previousProducts.map(product => product.id === id ? { ...product, ...data } : product));
 			alert("Le produit avec l'id " + data.id + " a été modifié");
 
 		} catch (err) {
@@ -138,7 +138,7 @@ const deleteProduct = async (id) => {
 			}
 
 			const data = await response.json();
-			setProducts(products.filter(product => product.id !== id));
+			setProducts(previousProducts => previousProducts.filter(product => product.id !== id));
 			alert("Le produit avec l'id " + data.id + " a été supprimé");
 	
 		} catch (err) {
