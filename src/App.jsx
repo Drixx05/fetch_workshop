@@ -26,6 +26,8 @@ function App() {
 				setProducts(data);
 			} catch (error) {
 				setError("Une erreur est survenue lors de la récupération des produits.")
+				console.error(error.message);
+				
 			} finally {
 				setLoading(false);
 			}
