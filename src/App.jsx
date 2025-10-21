@@ -9,17 +9,31 @@ import "./App.css";
 
 function App() {
 	const [products, setProducts] = useState([]);
+	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
 		async function fetchProducts() {
+			try {
 			const response = await fetch("https://fakestoreapi.com/products");
+			if (!response.ok) {
+				throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
+''}${response.status}`);
+			}
+			
 			const data = await response.json();
 			setProducts(data);
+		} catch (error) {
+			setError("Une erreur est survenue lors de la récupération des produits.")
+		} finally {
+			setLoading(false);
 		}
+	}
 		fetchProducts();
 	}, []);
 
 	const addProduct = async () => {
+		try {
 		const newProduct = await fetch("https://fakestoreapi.com/products", {
 			method: "POST",
 			body: JSON.stringify({
@@ -36,9 +50,13 @@ function App() {
 		});
 		const data = await newProduct.json();
 		alert("Le produit avec l'id " + data.id + " a été créé");
+		} catch (err) {
+			alert("Un problème est survenu lors de la création du produit")
+			console.error(error.message);
 	};
 
 	const updateProduct = async (id) => {
+		try {
 		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
 			method: "PUT",
 			headers: {
@@ -55,9 +73,13 @@ function App() {
 		});
 		const data = await response.json();
 		alert("Le produit avec l'id " + data.id + " a été modifié");
+		} catch (err) {
+			alert("Un problème est survenu lors de la modification du produit")
+			console.error(error.message);
 	};
 
 	const updateProductPrice = async (id) => {
+		try {
 		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
 			method: "PATCH",
 			headers: {
@@ -69,14 +91,21 @@ function App() {
 		});
 		const data = await response.json();
 		alert("Le produit avec l'id " + data.id + " a été modifié");
+		} catch (err) {
+			alert("Un problème est survenu lors de la modification du prix du produit")
+			console.error(error.message);
 	};
 
 	const deleteProduct = async (id) => {
+		try {
 		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
 			method: "DELETE",
 		});
 		const data = await response.json();
 		alert("Le produit avec l'id " + data.id + " a été supprimé");
+				} catch (err) {
+			alert("Un problème est survenu lors de la modification du produit")
+			console.error(error.message);
 	};
 
 	return (
@@ -93,13 +122,17 @@ function App() {
 								<Card.Title>{product.title}</Card.Title>
 								<Card.Text>{product.description}</Card.Text>
 								<Card.Text>{product.price} €</Card.Text>
-                <Card.Footer className="row gy-3 mx-0">
-								<Button variant="primary" onClick={updateProduct}>Modifier un produit</Button>
-								<Button  variant="warning" onClick={updateProductPrice}>
-									Modifier le prix du produit
-								</Button>
-								<Button variant="danger" onClick={deleteProduct}>Supprimer le produit</Button>
-                </Card.Footer>
+								<Card.Footer className="row gy-3 mx-0">
+									<Button variant="primary" onClick={() => updateProduct(product.id)}>
+										Modifier un produit
+									</Button>
+									<Button variant="warning" onClick={() => updateProductPrice(product.id)}>
+										Modifier le prix du produit
+									</Button>
+									<Button variant="danger" onClick={() => deleteProduct(product.id)}>
+										Supprimer le produit
+									</Button>
+								</Card.Footer>
 							</Card.Body>
 						</Card>
 					</Col>
