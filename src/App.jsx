@@ -15,98 +15,131 @@ function App() {
 	useEffect(() => {
 		async function fetchProducts() {
 			try {
-			const response = await fetch("https://fakestoreapi.com/products");
-			if (!response.ok) {
-				throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
-''}${response.status}`);
+				const response = await fetch("https://fakestoreapi.com/products");
+
+				if (!response.ok) {
+					throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
+					''}${response.status}`);
+				}
+				
+				const data = await response.json();
+				setProducts(data);
+			} catch (error) {
+				setError("Une erreur est survenue lors de la récupération des produits.")
+			} finally {
+				setLoading(false);
 			}
-			
-			const data = await response.json();
-			setProducts(data);
-		} catch (error) {
-			setError("Une erreur est survenue lors de la récupération des produits.")
-		} finally {
-			setLoading(false);
 		}
-	}
-		fetchProducts();
-	}, []);
+			fetchProducts();
+		}, []);
 
 	const addProduct = async () => {
 		try {
-		const newProduct = await fetch("https://fakestoreapi.com/products", {
-			method: "POST",
-			body: JSON.stringify({
-				title: "Nouveau Produit",
-				price: 77,
-				description: "Never gonna give you up",
-				image:
-					"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
-				category: "bijoux",
-			}),
-			headers: {
-				"Content-type": "application/json",
-			},
-		});
-		const data = await newProduct.json();
-		alert("Le produit avec l'id " + data.id + " a été créé");
+			const response = await fetch("https://fakestoreapi.com/products", {
+				method: "POST",
+				body: JSON.stringify({
+					title: "Nouveau Produit",
+					price: 77,
+					description: "Never gonna give you up",
+					image:
+						"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
+					category: "bijoux",
+				}),
+				headers: {
+					"Content-type": "application/json",
+				},
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
+				''}${response.status}`);
+			}
+			
+			const data = await response.json();
+			alert("Le produit avec l'id " + data.id + " a été créé");
+
 		} catch (err) {
 			alert("Un problème est survenu lors de la création du produit")
 			console.error(error.message);
-	};
+		};
+	}
 
 	const updateProduct = async (id) => {
 		try {
-		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				title: "Nouveau Produit",
-				price: 77,
-				description: "Never gonna give you up",
-				image:
-					"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
-				category: "bijoux",
-			}),
-		});
-		const data = await response.json();
-		alert("Le produit avec l'id " + data.id + " a été modifié");
+			const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+				method: "PUT",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					title: "Nouveau Produit",
+					price: 77,
+					description: "Never gonna give you up",
+					image:
+						"https://www.icegif.com/wp-content/uploads/2023/01/icegif-162.gif",
+					category: "bijoux",
+				}),
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
+				''}${response.status}`);
+			}
+
+			const data = await response.json();
+			alert("Le produit avec l'id " + data.id + " a été modifié");
+
 		} catch (err) {
 			alert("Un problème est survenu lors de la modification du produit")
 			console.error(error.message);
-	};
+		};
+	}
 
 	const updateProductPrice = async (id) => {
 		try {
-		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
-			method: "PATCH",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				price: 77.88,
-			}),
-		});
-		const data = await response.json();
-		alert("Le produit avec l'id " + data.id + " a été modifié");
+			const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+				method: "PATCH",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					price: 77.88,
+				}),
+			});		
+
+			if (!response.ok) {
+				throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
+				''}${response.status}`);
+			}
+
+			const data = await response.json();
+			alert("Le produit avec l'id " + data.id + " a été modifié");
+
 		} catch (err) {
 			alert("Un problème est survenu lors de la modification du prix du produit")
 			console.error(error.message);
-	};
+		};
+	}
 
-	const deleteProduct = async (id) => {
+const deleteProduct = async (id) => {
 		try {
-		const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
-			method: "DELETE",
-		});
-		const data = await response.json();
-		alert("Le produit avec l'id " + data.id + " a été supprimé");
-				} catch (err) {
-			alert("Un problème est survenu lors de la modification du produit")
-			console.error(error.message);
-	};
+			const response = await fetch(`https://fakestoreapi.com/products/${id}`, {
+				method: "DELETE",
+			});
+
+			if (!response.ok) {
+				throw new Error(`HTTP Error :${response.statusText ? response.statusText + ' - ' :
+				''}${response.status}`);
+			}
+
+			const data = await response.json();
+			alert("Le produit avec l'id " + data.id + " a été supprimé");
+	
+		} catch (err) {
+				alert("Un problème est survenu lors de la modification du produit")
+				console.error(error.message);
+		};
+	}
 
 	return (
 		<Container>
